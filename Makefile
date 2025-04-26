@@ -24,7 +24,7 @@ T_SRC =	$(addprefix $(T_DIR), main.c \
 		test_libasm_bonus.c)
 T_HDR = $(T_DIR)test.h
 TEST =	$(T_DIR)test
-FLG =	-Werror -Wall -Wextra
+FLG =	-Wall -Wextra -Werror
 
 #$@ = target
 #$^ = list of prerequisite

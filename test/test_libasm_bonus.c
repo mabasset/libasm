@@ -6,7 +6,7 @@
 /*   By: mabasset <mabasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 12:17:49 by mabasset          #+#    #+#             */
-/*   Updated: 2025/04/13 22:50:05 by mabasset         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:41:58 by mabasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,45 @@ void    test_atoi(char *str, char *base) {
 }
 
 int     ft_intcmp(int *n1, int *n2) {
-    return *n1 != *n2;
+    return *n1 - *n2;
 }
 
-void    ft_freeint(int *ptr) {
-    free(ptr);
+void    ft_print_list(t_list* head) {
+    for (int i = 0; head != NULL; i++, head = head->next)
+        printf("[%d]: %d\n", i, *((int*)head->data));
+}
+
+void    ft_free_list(t_list* head) {
+    t_list* tmp;
+    while (head != NULL) {
+        tmp = head->next;
+        free(head->data);
+        free(head);
+        head = tmp;
+    }
 }
 
 void    test_list_functions() {
     int     ret;
     t_list* head = NULL;
-    t_list* current;
     
     size_t  i;
-    size_t size = 4;
+    size_t  size = 20;
     int *ar[size];
 
     for (i = 0; i < size; i++) {
-        ar[i] = malloc(sizeof(int));
-        *ar[i] = i;
+        ar[i] = malloc(sizeof(int*));
+        *ar[i] = rand() % 100;
     }
+
+    *ar[2] = 0;
 
     printf("---FT_LIST_PUSH_FRONT---\n");
 
     for (i = 0; i < size; i++)
         ft_list_push_front(&head, ar[i]);
-    for (i = 0, current = head; current != NULL; i++, current = current->next)
-        printf("[%ld]: %d\n", i, *((int*)current->data));
     printf("errno: %d\n", errno);
+    ft_print_list(head);
     errno = 0;
 
     printf("---FT_LIST_SIZE---\n");
@@ -66,22 +77,47 @@ void    test_list_functions() {
 
     printf("---FT_LIST_REMOVE_IF---\n");
 
-    ft_list_remove_if(&head, ar[2], ft_intcmp, free);
+    int x = *((int*)head->next->data);
+    ft_list_remove_if(&head, &x, ft_intcmp, free);
     printf("errno: %d\n", errno);
+    printf("removed: %d\n", x);
+    ft_print_list(head);
     errno = 0;
+
+    printf("---FT_LIST_SORT---\n");
+    
+    ft_list_sort(&head, ft_intcmp);
+    printf("errno: %d\n", errno);
+    ft_print_list(head);
+    errno = 0;
+
+    ft_free_list(head);
 }
 
-void ft_list_remove_if(t_list** head, int nbr) {
-    t_list* prev = *head;
-    t_list* curr = prev->next;
-    while (curr != NULL) {
-        if (curr->data == nbr)
-            prev->next = curr->next;
-        else
-            prev = curr;
-        curr = prev->next;
-    }
-    curr = *head;
-    if (curr->data == nbr)
-        *head = curr->next;
-}
+// void    ft_list_sort(t_list **begin_list, int(*cmp)()) {
+//     int swapped;
+//     t_list *prev;
+//     t_list *first;
+//     t_list *second;
+
+//     do {
+//         swapped = 0;
+//         prev = NULL;
+//         first = *begin_list;
+//         while (first && first->next != NULL) {
+//             second = first->next;
+//             if (cmp(first->data, second->data) > 0) {
+//                 swapped = 1;
+//                 first->next = second->next;
+//                 second->next = first;
+//                 first = second;
+//                 if (prev)
+//                     prev->next = first;
+//                 else
+//                     *begin_list = first;
+//             }
+//             prev = first;
+//             first = first->next;
+//         }
+//     } while (swapped);
+// }
