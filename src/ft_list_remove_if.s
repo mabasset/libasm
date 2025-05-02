@@ -80,7 +80,6 @@ ft_list_remove_if:
     ret
 
 .abort:
-    push 14
     call __errno_location wrt ..plt
-    pop qword [rax]
+    mov qword [rax], 14
     ret

@@ -33,7 +33,7 @@ get_base_length:
     mov rcx, 256
     xor rax, rax
     mov rdi, rsp
-    rep stosb
+    rep stosb       ;map for duplicates
     xor rcx, rcx
 .loop:
     movzx rdi, byte [rsi + rcx]

@@ -29,12 +29,12 @@ ft_list_push_front:
     ret
 
 .bad_addr:
-    mov r8, 14
+    push 14
     jmp .abort
 .out_of_memory:
-    mov r8, 12
+    push 12
 .abort:
     call __errno_location wrt ..plt
-    mov [rax], r8
+    pop qword [rax]
     xor rax, rax
     ret

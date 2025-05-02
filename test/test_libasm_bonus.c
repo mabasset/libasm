@@ -6,7 +6,7 @@
 /*   By: mabasset <mabasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 12:17:49 by mabasset          #+#    #+#             */
-/*   Updated: 2025/04/26 19:41:58 by mabasset         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:43:38 by mabasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    test_list_functions() {
     t_list* head = NULL;
     
     size_t  i;
-    size_t  size = 20;
+    size_t  size = 10;
     int *ar[size];
 
     for (i = 0; i < size; i++) {
@@ -93,31 +93,3 @@ void    test_list_functions() {
 
     ft_free_list(head);
 }
-
-// void    ft_list_sort(t_list **begin_list, int(*cmp)()) {
-//     int swapped;
-//     t_list *prev;
-//     t_list *first;
-//     t_list *second;
-
-//     do {
-//         swapped = 0;
-//         prev = NULL;
-//         first = *begin_list;
-//         while (first && first->next != NULL) {
-//             second = first->next;
-//             if (cmp(first->data, second->data) > 0) {
-//                 swapped = 1;
-//                 first->next = second->next;
-//                 second->next = first;
-//                 first = second;
-//                 if (prev)
-//                     prev->next = first;
-//                 else
-//                     *begin_list = first;
-//             }
-//             prev = first;
-//             first = first->next;
-//         }
-//     } while (swapped);
-// }

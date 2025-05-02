@@ -12,8 +12,8 @@ ft_write:
 
 .abort:
     neg rax
-    mov r8, rax
+    push rax
     call __errno_location wrt ..plt
-    mov [rax], r8
+    pop qword [rax]
     mov rax, -1
     ret
